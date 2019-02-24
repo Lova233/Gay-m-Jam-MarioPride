@@ -8,9 +8,10 @@ GameJam.Preload = {
         this.load.image('background', 'assets/images/background.png');
         this.load.image('dark', 'assets/images/dark.png');
         this.load.spritesheet('mario', 'assets/images/mario.png', 454, 865, 10);
-        this.load.spritesheet('browser', 'assets/images/browser.png', 1260, 1030, 1);
+        this.load.spritesheet('browser', 'assets/images/browser.png', 1260, 1030, 2);
         this.load.spritesheet('monster', 'assets/images/monster.png', 220, 226, 2);
         this.load.spritesheet('pianta', 'assets/images/pianta.png', 220, 226, 2);
+        this.load.spritesheet('fly', 'assets/images/fly.png', 209, 281, 2);
 
         this.load.image('square', 'assets/images/square.png');
          this.load.image('ground', 'assets/images/ground.png');

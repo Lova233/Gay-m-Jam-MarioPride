@@ -37,9 +37,22 @@ GameJam.Game = {
         this.controller.addCommand(this.moveRight);
         this.controller.addCommand(this.jump);
         this.browser = new Browser(game);
+        this.fly =  game.add.sprite(game.width-100, 50, 'fly');
+       
+        this.fly.scale.setTo(0.4);
+        this.fly.animations.add("move");
+        this.fly.animations.play("move",5,true);
+
+        game.physics.arcade.enable([this.fly]);
+        this.fly.immovable = false;
+        this.fly.body.allowGravity = false;
+        game.add.tween(this.fly).from( { x: -1200 }, 2000, Phaser.Easing.Bounce.Out, true);
+
+
     },
 
     update: function(){
+    
         game.physics.arcade.collide(this.mario, this.boxFactory.boxes);  
         game.physics.arcade.collide(this.boxFactory.monsters, this.boxFactory.boxes);  
         game.physics.arcade.overlap(this.browser, this.boxFactory.monsters,(browser,monster)=>{
