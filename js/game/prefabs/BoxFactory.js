@@ -3,7 +3,7 @@ BoxFactory = function(game) {
     this.boxes = game.add.group();
     this.monsters = game.add.group();
     this.piantas = game.add.group();
-
+    this.flag = false;
     this.lastX;
     this.lastY;
     this.lastBoxTime = game.time.now;
@@ -67,8 +67,23 @@ BoxFactory = function(game) {
         monster.body.velocity.x=-130;
 
         this.monsters.add(monster);
+    },
+    this.stopTheHell= function(){
+        this.boxRecall=99999999;
+        this.plantRecall=99999999;
+        if(!this.flag){
+            let flag = game.add.sprite(game.width+400, game.height-300, 'fly');
+            flag.scale.setTo(0.7);
+            flag.animations.add("move");
+            flag.animations.play("move",5,true);
+            game.physics.arcade.enable([flag]);
+            flag.immovable = false;
+            flag.body.allowGravity = false;
+            flag.body.velocity.x=-70;
+
+            this.flag = flag;
+        }
     }
-  
 }
 BoxFactory.prototype = Object.create(Phaser.Sprite.prototype);
 BoxFactory.prototype.constructor = BoxFactory;

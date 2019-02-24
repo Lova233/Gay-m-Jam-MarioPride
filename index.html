@@ -16,8 +16,8 @@
     <script src="js/game/states/Boot.js"></script>
     <script src="js/game/states/Preload.js"></script>
      <script src="js/game/states/Game.js"></script>
-    <!-- <script src="js/game/states/MainMenu.js"></script>
-    <script src="js/game/states/GameOver.js"></script> --> 
+    <script src="js/game/states/Menu.js"></script>
+    <!-- <script src="js/game/states/GameOver.js"></script> --> 
     <script src="js/game/prefabs/GameAction.js"></script>
     <script src="js/game/prefabs/Command.js"></script>
     <script src="js/game/prefabs/Controller.js"></script>
@@ -41,17 +41,17 @@
     
         body {
             height: 100vh;
-            background: black;
+            background: url('assets/images/canvasBack.png');
+            background-position: cover no-repeat;
             padding: 0px;
             margin: 0px;
             display: flex;
-            /* flex-direction: column; */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             max-height: 100vh;
-            background-size: 200px;
-            background-repeat: round
+            background-repeat: no-repeat;
         }
 
         @media only screen and (max-width: 440px) {

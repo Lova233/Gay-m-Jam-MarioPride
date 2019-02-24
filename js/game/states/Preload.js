@@ -14,12 +14,29 @@ GameJam.Preload = {
         this.load.spritesheet('fly', 'assets/images/fly.png', 209, 281, 2);
 
         this.load.image('square', 'assets/images/square.png');
+        this.load.image('flower', 'assets/images/flower.png');
+
          this.load.image('ground', 'assets/images/ground.png');
          this.load.image('grass', 'assets/images/grass.png');
          this.load.image('block', 'assets/images/block.png');
-         this.load.tilemap('level', 'assets/levels/level.json', null, Phaser.Tilemap.TILED_JSON);
+         this.load.image('menu', 'assets/images/menu.png');
+         this.load.image('logo', 'assets/images/mariologo.png');
+         this.load.image('start', 'assets/images/start.png');
+         this.load.image('asta', 'assets/images/asta.png');
 
 
+        
+            //text
+            this.load.image('firstweek', 'assets/images/firstweek.png');
+            this.load.image('itspride', 'assets/images/itspride.png');
+            this.load.image('noitsnot', 'assets/images/notitsnot.png');
+            this.load.image('timeto', 'assets/images/timeto.png');
+            this.load.image('thereis', 'assets/images/thereis.png');
+
+
+
+
+            //finish
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 200, 'preloadbar');
         this.preloadBar.anchor.setTo(0.5);
 
@@ -33,7 +50,7 @@ GameJam.Preload = {
     },
     update: function() {
         if (this.ready === true) {
-            this.state.start('Game');
+            this.state.start('Menu');
         }
     },
     onLoadComplete: function() {

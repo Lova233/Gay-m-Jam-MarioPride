@@ -2,14 +2,15 @@ GameJam.Game = function() {}
 GameJam.Game = {
 
     create: function() {
-
+        this.startTime= game.time.now;
+        this.duration = 20000;
         this.background = game.add.tileSprite(0 , game.height-300, game.width, 300, 'background');
         this.background.autoScroll(-100, 0);
         // this.background.scale.setTo(1,0.7);
         this.ground = game.add.tileSprite(0, game.height - 8, game.width, 8, 'ground');
         this.ground.autoScroll(-0, 0);
         // this.background.tint = Math.random()*0xffffff;
-        this.mario = new Mario(this.game,400,100,"mario");
+        this.mario = new Mario(this.game,550,100,"mario");
         this.gameActions = new GameAction(game,this.mario);
         this.boxFactory = new BoxFactory(game);
         game.physics.enable([ this.ground, this.mario ], Phaser.Physics.ARCADE);
@@ -37,16 +38,15 @@ GameJam.Game = {
         this.controller.addCommand(this.moveRight);
         this.controller.addCommand(this.jump);
         this.browser = new Browser(game);
-        this.fly =  game.add.sprite(game.width-100, 50, 'fly');
-       
+        this.fly =  game.add.sprite(game.width+200, 50, 'fly');
+    
         this.fly.scale.setTo(0.4);
         this.fly.animations.add("move");
         this.fly.animations.play("move",5,true);
-
         game.physics.arcade.enable([this.fly]);
         this.fly.immovable = false;
         this.fly.body.allowGravity = false;
-        game.add.tween(this.fly).from( { x: -1200 }, 2000, Phaser.Easing.Bounce.Out, true);
+        game.add.tween(this.fly).from( { x: -1200 }, 12000, Phaser.Easing.Bounce.Out, true);
 
 
     },
@@ -61,12 +61,18 @@ GameJam.Game = {
         game.physics.arcade.overlap(this.browser, this.boxFactory.boxes,(browser,boxes)=>{
             boxes.body.velocity.y=-1000;boxes.body.velocity.x=-1500;
         });  
+        game.physics.arcade.overlap(this.mario, this.browser,(mario,browser)=>{
+        this.gameOver();
+        });  
+        game.physics.arcade.overlap(this.browser, this.boxFactory.piantas,(browser,piantas)=>{
+            piantas.body.velocity.y=-1000;piantas.body.velocity.x=-1500;
+        });  
         game.physics.arcade.collide(this.mario, this.boxFactory.monsters,(mario,monster)=>{
             if(monster.y-mario.y>90) monster.kill()
-             else mario.kill();
+             else this.gameOver()
             });  
             game.physics.arcade.collide(this.mario, this.boxFactory.piantas,(mario,monster)=>{
-                mario.kill();
+                this.gameOver()
                 });  
 
         this.boxFactory.boxes.children.forEach(box=>{
@@ -75,9 +81,13 @@ GameJam.Game = {
         this.controller.listen();
         
         this.boxFactory.startFactory();
+        if(game.time.now> this.startTime+this.duration){
+            this.boxFactory.stopTheHell();
+         
+        } 
     },
-    render: function(){
-     
+    gameOver: function(){
+        this.mario.kill()
     }
 
 }

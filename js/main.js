@@ -7,6 +7,8 @@ let game = new Phaser.Game(1200,600 , Phaser.AUTO, '');
 game.state.add('Boot', GameJam.Boot);
 game.state.add('Preloader', GameJam.Preload);
 game.state.add('Game', GameJam.Game);
+game.state.add('Menu', GameJam.Menu);
+
 // game.state.add('MainMenu', JustRun.MainMenu);
 // game.state.add('GameOver', JustRun.GameOver);
 
