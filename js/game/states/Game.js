@@ -9,10 +9,9 @@ GameJam.Game = {
         this.ground = game.add.tileSprite(0, game.height - 8, game.width, 8, 'ground');
         this.ground.autoScroll(-0, 0);
         // this.background.tint = Math.random()*0xffffff;
-        this.mario = new Mario(this.game,200,200,"mario");
+        this.mario = new Mario(this.game,400,100,"mario");
         this.gameActions = new GameAction(game,this.mario);
         this.boxFactory = new BoxFactory(game);
-        this.boxFactory.addBox(400,game.height-100);
         game.physics.enable([ this.ground, this.mario ], Phaser.Physics.ARCADE);
     
         game.physics.arcade.gravity.y = 2000;
@@ -42,14 +41,30 @@ GameJam.Game = {
 
     update: function(){
         game.physics.arcade.collide(this.mario, this.boxFactory.boxes);  
-        game.physics.arcade.overlap(this.browser, this.boxFactory.boxes,(browser,boxes)=>{
-            boxes.body.velocity.y=-1000;boxes.body.velocity.x=-500;
+        game.physics.arcade.collide(this.boxFactory.monsters, this.boxFactory.boxes);  
+        game.physics.arcade.overlap(this.browser, this.boxFactory.monsters,(browser,monster)=>{
+            monster.body.velocity.y=-1000;monster.body.velocity.x=-500;
         });  
+        game.physics.arcade.overlap(this.browser, this.boxFactory.boxes,(browser,boxes)=>{
+            boxes.body.velocity.y=-1000;boxes.body.velocity.x=-1500;
+        });  
+        game.physics.arcade.collide(this.mario, this.boxFactory.monsters,(mario,monster)=>{
+            if(monster.y-mario.y>90) monster.kill()
+             else mario.kill();
+            });  
+            game.physics.arcade.collide(this.mario, this.boxFactory.piantas,(mario,monster)=>{
+                mario.kill();
+                });  
 
+        this.boxFactory.boxes.children.forEach(box=>{
+            if(box.x<this.browser.x) box.destroy();
+        })    
         this.controller.listen();
         
         this.boxFactory.startFactory();
     },
-    render: function(){}
+    render: function(){
+     
+    }
 
 }
