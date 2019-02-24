@@ -17,30 +17,30 @@ Mario = function(game,x,y,key,frame) {
             this.scale.x *=-1;
         }
 
-        this.x-=10;
-        this.animations.play("run",10,false);
+        this.body.velocity.x = -200;
+        if(this.body.blocked.down) this.animations.play("run",10,false);
     }
     this.moveRight = function(){
         if(!this.isForward) {
             this.isForward = true;
             this.scale.x *=-1;
         }
-        this.x+=10;
-        this.animations.play("run",10,false);
+        this.body.velocity.x = +200;
+        if(this.body.blocked.down) this.animations.play("run",10,false);
     }
     this.jump = function(){
         console.log(this.body)
-        if(this.body.blocked.down){
+        if(this.body.blocked.down || this.body.touching.down){
             this.animations.play("jump",3,false);
             this.body.velocity.y = -800;
         }
     }
-    // this.update = function(){
-    //     if(this.body.blocked.down){
-    //         this.animations.stop("jump",true);
-
-    //     }
-    // }
+    this.update = function(){
+        let leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+        let rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        if(!leftKey.isDown && !rightKey.isDown) 
+            this.body.velocity.x = 0;
+    }
     this.shoot = function(){}
     this.die = function(){}
 }
