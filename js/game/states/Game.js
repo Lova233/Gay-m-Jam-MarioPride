@@ -2,7 +2,6 @@ GameJam.Game = function() {}
 GameJam.Game = {
 
     create: function() {
-   
 
         this.background = game.add.tileSprite(0 , game.height-300, game.width, 300, 'background');
         this.background.autoScroll(-100, 0);
@@ -13,7 +12,7 @@ GameJam.Game = {
         this.mario = new Mario(this.game,200,200,"mario");
         this.gameActions = new GameAction(game,this.mario);
         this.boxFactory = new BoxFactory(game);
-        this.boxFactory.addBox(200,200);
+        this.boxFactory.addBox(400,game.height-100);
         game.physics.enable([ this.ground, this.mario ], Phaser.Physics.ARCADE);
     
         game.physics.arcade.gravity.y = 2000;
@@ -38,12 +37,19 @@ GameJam.Game = {
         this.controller.addCommand(this.moveLeft);
         this.controller.addCommand(this.moveRight);
         this.controller.addCommand(this.jump);
+        this.browser = new Browser(game);
     },
 
     update: function(){
+        game.physics.arcade.collide(this.mario, this.boxFactory.boxes);  
+        game.physics.arcade.overlap(this.browser, this.boxFactory.boxes,(browser,boxes)=>{
+            boxes.body.velocity.y=-1000;boxes.body.velocity.x=-500;
+        });  
+
         this.controller.listen();
         
-        // game.physics.arcade.collide(this.mario, this.ground);  
-        // this.boxFactory.startFactory();
+        this.boxFactory.startFactory();
     },
+    render: function(){}
+
 }

@@ -8,9 +8,13 @@ GameJam.Preload = {
         this.load.image('background', 'assets/images/background.png');
         this.load.image('dark', 'assets/images/dark.png');
         this.load.spritesheet('mario', 'assets/images/mario.png', 454, 865, 5);
+        this.load.spritesheet('browser', 'assets/images/browser.png', 1260, 1030, 1);
+
         this.load.image('square', 'assets/images/square.png');
          this.load.image('ground', 'assets/images/ground.png');
-
+         this.load.image('grass', 'assets/images/grass.png');
+         this.load.image('block', 'assets/images/block.png');
+         this.load.tilemap('level', 'assets/levels/level.json', null, Phaser.Tilemap.TILED_JSON);
 
 
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 200, 'preloadbar');
