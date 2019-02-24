@@ -23,7 +23,9 @@ GameJam.Preload = {
          this.load.image('logo', 'assets/images/mariologo.png');
          this.load.image('start', 'assets/images/start.png');
          this.load.image('asta', 'assets/images/asta.png');
+         this.load.image('fumetto', 'assets/images/fumetto.png');
 
+         this.load.image('gameOver', 'assets/images/gameOver.png');
 
         
             //text
@@ -32,14 +34,19 @@ GameJam.Preload = {
             this.load.image('noitsnot', 'assets/images/notitsnot.png');
             this.load.image('timeto', 'assets/images/timeto.png');
             this.load.image('thereis', 'assets/images/thereis.png');
-
-
-
-
+            this.load.image('thanks', 'assets/images/thanks.png');
+            this.load.image('rising', 'assets/images/rising.png');
+            this.load.image('pride', 'assets/images/pride.png');
             //finish
-        this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 200, 'preloadbar');
-        this.preloadBar.anchor.setTo(0.5);
+            this.load.audio('enemyHit', 'assets/audio/enemyhit.wav');
+            this.load.audio('jump', 'assets/audio/jump.wav')
+            this.load.audio('gameover', 'assets/audio/gameover.wav')
+            this.load.audio('soundtrack', 'assets/audio/soundtrack.mp3')
 
+
+            this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 200, 'preloadbar');
+        this.preloadBar.anchor.setTo(0.5);
+        
         this.load.setPreloadSprite(this.preloadBar);
 
 

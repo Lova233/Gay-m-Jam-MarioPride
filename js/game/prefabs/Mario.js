@@ -8,7 +8,10 @@ Mario = function(game,x,y,key,frame) {
     this.animations.add("jump",[4,4,0]);
     this.animations.add("jumpBack",[9,9,5]);
     game.physics.enable([ this ], Phaser.Physics.ARCADE);
-
+    this.audios = {
+        jump: game.add.audio('jump'),
+    
+    }
     this.body.collideWorldBounds = true;
 
     this.isForward = true;
@@ -30,7 +33,7 @@ Mario = function(game,x,y,key,frame) {
     }
     this.jump = function(){
         if(this.body.blocked.down || this.body.touching.down || this.body.velocity.y==0){
-           
+           this.audios.jump.play();
            if(this.isForward) this.animations.play("jump",3,false);
             else this.animations.play("jumpBack",3,false);
             this.body.velocity.y = -800;

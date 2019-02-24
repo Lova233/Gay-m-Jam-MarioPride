@@ -3,7 +3,7 @@ GameJam.Game = {
 
     create: function() {
         this.startTime= game.time.now;
-        this.duration = 20000;
+        this.duration = 10000;
         this.background = game.add.tileSprite(0 , game.height-300, game.width, 300, 'background');
         this.background.autoScroll(-100, 0);
         // this.background.scale.setTo(1,0.7);
@@ -32,6 +32,7 @@ GameJam.Game = {
         this.jump = new Command(
             game,this.gameActions,Phaser.Keyboard.UP,this.gameActions.get().MARIO_JUMP
         )   
+        this.notEnter = false;
 
         this.controller = new Controller(game);
         this.controller.addCommand(this.moveLeft);
@@ -47,7 +48,14 @@ GameJam.Game = {
         this.fly.immovable = false;
         this.fly.body.allowGravity = false;
         game.add.tween(this.fly).from( { x: -1200 }, 12000, Phaser.Easing.Bounce.Out, true);
-
+        this.audios = {
+            hitAudio: game.add.audio('enemyHit'),
+            jump: game.add.audio('jump'),
+            gameOver: game.add.audio('gameover'),
+            soundtrack:game.add.audio('soundtrack')
+        
+        }
+        this.audios.soundtrack.play();
 
     },
 
@@ -68,13 +76,16 @@ GameJam.Game = {
             piantas.body.velocity.y=-1000;piantas.body.velocity.x=-1500;
         });  
         game.physics.arcade.collide(this.mario, this.boxFactory.monsters,(mario,monster)=>{
-            if(monster.y-mario.y>90) monster.kill()
+            if(monster.y-mario.y>90) {monster.kill(); this.audios.hitAudio.play();}
              else this.gameOver()
             });  
             game.physics.arcade.collide(this.mario, this.boxFactory.piantas,(mario,monster)=>{
                 this.gameOver()
                 });  
+                game.physics.arcade.overlap(this.mario, this.boxFactory.flag,(mario,flag)=>{
+                    this.state.start('Won');
 
+                });        
         this.boxFactory.boxes.children.forEach(box=>{
             if(box.x<this.browser.x) box.destroy();
         })    
@@ -83,11 +94,25 @@ GameJam.Game = {
         this.boxFactory.startFactory();
         if(game.time.now> this.startTime+this.duration){
             this.boxFactory.stopTheHell();
-         
-        } 
+         } 
+         if(!this.notEnter){
+                if(!this.hasFumetto && game.time.now >this.startTime+9000){
+                    this.fumetto = game.add.sprite(900,50,"fumetto")
+                    this.fumetto.scale.setTo(0.4);
+                    this.hasFumetto = true;
+                } else if(this.hasFumetto && game.time.now >this.startTime+14000) {
+                    this.fumetto.destroy();
+                    this.notEnter = true;
+                }
+        }
     },
     gameOver: function(){
-        this.mario.kill()
+        this.audios.gameOver.play();
+        this.mario.kill();
+        this.game.stage.backgroundColor = '#0000';
+
+        this.background = game.add.tileSprite(0 , 0, game.width, game.height, 'gameOver');
+
     }
 
 }
