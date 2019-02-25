@@ -80,7 +80,6 @@ BoxFactory = function(game) {
             flag.immovable = false;
             flag.body.allowGravity = false;
             flag.body.velocity.x=-70;
-
             this.flag = flag;
         }
     }

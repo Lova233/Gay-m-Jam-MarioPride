@@ -3,7 +3,7 @@ GameJam.Game = {
 
     create: function() {
         this.startTime= game.time.now;
-        this.duration = 10000;
+        this.duration = 60000;
         this.background = game.add.tileSprite(0 , game.height-300, game.width, 300, 'background');
         this.background.autoScroll(-100, 0);
         // this.background.scale.setTo(1,0.7);
@@ -56,7 +56,7 @@ GameJam.Game = {
         
         }
         this.audios.soundtrack.play();
-
+        this.win=false;
     },
 
     update: function(){
@@ -83,8 +83,12 @@ GameJam.Game = {
                 this.gameOver()
                 });  
                 game.physics.arcade.overlap(this.mario, this.boxFactory.flag,(mario,flag)=>{
-                    this.state.start('Won');
-
+                    if(!this.win){
+                game.add.tween(flag).from( { y: -500,x:300 }, 8000, Phaser.Easing.Bounce.Out, true);
+                this.win=true;    
+                this.end = game.time.now+7000; 
+                    }
+               // }
                 });        
         this.boxFactory.boxes.children.forEach(box=>{
             if(box.x<this.browser.x) box.destroy();
@@ -105,6 +109,10 @@ GameJam.Game = {
                     this.notEnter = true;
                 }
         }
+        if(game.time.now>this.end && this.win) 
+            this.state.start('Won')
+        
+        if(game.time.now<this.end && this.win) this.mario.jump()
     },
     gameOver: function(){
         this.audios.gameOver.play();
