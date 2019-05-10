@@ -1,4 +1,4 @@
-# GayJam-MarioPride
+# Gay(m)Jam-MarioPride
 Web game made at the GayJam @ Brighton University
 
 ![60348886_2270208449974903_6179514897269784576_n](https://user-images.githubusercontent.com/26262177/57542457-aa640800-7349-11e9-8e0a-4f632053eb90.png)
